@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">ColorSensor6Well</string>
+    <string name="bluetext">Blue:</string>
+    <string name="representative_color">Representative Color:</string>
+    <string name="stopwatch">Stopwatch</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="connect">Connect</string>
+    <string name="begin">Begin</string>
+    <string name="graphs">Graphs</string>
+    <string name="save">Save</string>
+    <string name="calibrate">Calibrate</string>
+    <string name="data">Data:</string>
+    <string name="green">Green:</string>
+    <string name="red">Red:</string>
+    <string name="reset_data">Reset Data</string>
+    <string name="time">Time:</string>
+    <string name="save_as_image">Save as Image</string>
+    <string name="measure">Measure</string>
+    <string name="dialog_choose_sensors">Choose Sensors to Measure</string>
+    <string name="cancel">Cancel</string>
+    <string name="draw_fluid">Draw Fluid</string>
+    <string name="release_fluid">Release Fluid</string>
+    <string name="s0">S0</string>
+    <string name="s0_off">S0 Off</string>
+    <string name="s0_on">S0 On</string>
+    <string name="s1">S1</string>
+    <string name="s3_on">S3 On</string>
+    <string name="s3_off">S3 Off</string>
+    <string name="s5_off">S5 Off</string>
+    <string name="s1_off">S1 Off</string>
+    <string name="s4">S4</string>
+    <string name="s2_on">S2 On</string>
+    <string name="s2_off">S2 Off</string>
+    <string name="s4_off">S4 Off</string>
+    <string name="s4_on">S4 On</string>
+    <string name="s1_on">S1 On</string>
+    <string name="s2">S2</string>
+    <string name="s5">S5</string>
+    <string name="s5_on">S5 On</string>
+    <string name="s3">S3</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
