@@ -16,7 +16,8 @@ import java.io.IOException;
 
 public class FormattedWorkbook {
     private HSSFWorkbook _workbook;
-    private static String[] columns = {"Measurement #", "Sensor #", "Alpha", "Red", "Green", "Blue", "Percent Red", "Percent Green", "Percent Blue", "Hex Color"};
+    private static String[] columns = {"Measurement #", "Sensor #", "Alpha", "Red", "Green", "Blue",
+            "% Red", "% Green", "% Blue", "Yellow #", "Cyan #", "Magenta #", "Hex Color"};
     private HSSFSheet _sheet;
 
     private int measurementColumn = 0;
@@ -28,7 +29,10 @@ public class FormattedWorkbook {
     private int percentRedColumn = 6;
     private int percentGreenColumn = 7;
     private int percentBlueColumn = 8;
-    private int hexColorColumn = 9;
+    private int yellowNumColumn = 9;
+    private int cyanNumColumn = 10;
+    private int magentaNumColumn = 11;
+    private int hexColorColumn = 12;
 
     FormattedWorkbook() {
         _workbook = new HSSFWorkbook();
@@ -37,7 +41,7 @@ public class FormattedWorkbook {
         //set default column width to make up for the fact we can't resize columns automagically
         //https://stackoverflow.com/questions/37069820/android-poi-crash-when-using-autosizecolumn
         int fontSize = 14;
-        _sheet.setDefaultColumnWidth((int)(0.11 * fontSize * columns[6].length())); //longest column should be Percent Green name
+        _sheet.setDefaultColumnWidth((int)(0.11 * fontSize * columns[0].length())); //longest column should be Measurement # name
 
         // Create a Font for styling header cells
         Font headerFont = _workbook.createFont();
@@ -99,6 +103,12 @@ public class FormattedWorkbook {
             row.createCell(percentRedColumn).setCellValue(percentRed);
             row.createCell(percentGreenColumn).setCellValue(percentGreen);
             row.createCell(percentBlueColumn).setCellValue(percentBlue);
+
+            //Calculate different combinations of color number
+            row.createCell(yellowNumColumn).setCellValue(percentRed + percentGreen - percentBlue);
+            row.createCell(cyanNumColumn).setCellValue(-percentRed + percentGreen + percentBlue);
+            row.createCell(magentaNumColumn).setCellValue(percentRed - percentGreen + percentBlue);
+
             row.createCell(hexColorColumn).setCellValue(colorHexString(percentRed, percentGreen, percentBlue));
         }
 
