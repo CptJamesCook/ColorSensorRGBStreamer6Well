@@ -1,58 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context=".ExtensionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
-    <RadioGroup
-        android:id="@+id/extension_choices_radio_group"
+    <TextView
+        android:id="@+id/text_view_extension_length"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/extension_length_1_100" />
 
-        <RadioButton
-            android:id="@+id/quarter_extension_radioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Quarter Extension" />
-
-        <RadioButton
-            android:id="@+id/one_third_extension_radioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Third Extension" />
-
-        <RadioButton
-            android:id="@+id/half_extension_radioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Half Extension" />
-
-        <RadioButton
-            android:id="@+id/two_thirds_extension_radioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Two Thirds Extension" />
-
-        <RadioButton
-            android:id="@+id/three_quarters_extension_radioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Three Quarters Extension" />
-
-        <RadioButton
-            android:id="@+id/full_extension_radioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Full Extension" />
-    </RadioGroup>
-
-</FrameLayout>
+    <EditText
+        android:id="@+id/edit_text_extension_length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:importantForAutofill="no" />
+</LinearLayout>

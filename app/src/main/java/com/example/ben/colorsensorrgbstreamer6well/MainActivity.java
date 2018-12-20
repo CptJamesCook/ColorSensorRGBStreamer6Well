@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,8 +98,6 @@ public class MainActivity extends AppCompatActivity
     private ColorData colorData = new ColorData();
 
     private boolean fluidDrawn = false;
-
-    private RadioGroup radioGroup;
 
     XYSeries redSeries;
     XYSeries greenSeries;
@@ -780,7 +779,9 @@ public class MainActivity extends AppCompatActivity
     public void setExtension() {
         LayoutInflater inflater = this.getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_extension, null);
-        radioGroup = view.findViewById(R.id.extension_choices_radio_group);
+
+        final EditText extensionLength = view.findViewById(R.id.edit_text_extension_length);
+        extensionLength.setFilters(new InputFilter[] {new InputFilterMinMax(1, 100)});
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Extension Length")
@@ -789,33 +790,23 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        int extensionValue;
-                        switch(radioGroup.getCheckedRadioButtonId()) {
-                            case R.id.quarter_extension_radioButton:
-                                extensionValue = 0;
+                        String editTextResult = extensionLength.getText().toString();
+                        String value = "";
+
+                        switch(editTextResult.length()) {
+                            case 0:
+                                value = "S0000000000000";
                                 break;
-                            case R.id.one_third_extension_radioButton:
-                                extensionValue = 1;
+                            case 1:
+                                value = "S00" + editTextResult + "0000000000";
                                 break;
-                            case R.id.half_extension_radioButton:
-                                extensionValue = 2;
+                            case 2:
+                                value = "S0" + editTextResult + "0000000000";
                                 break;
-                            case R.id.two_thirds_extension_radioButton:
-                                extensionValue = 3;
-                                break;
-                            case R.id.three_quarters_extension_radioButton:
-                                extensionValue = 4;
-                                break;
-                            case R.id.full_extension_radioButton:
-                                extensionValue = 5;
-                                break;
-                            default:// if nothing is chosen, default is full extension
-                                extensionValue = 5;
+                            case 3:
+                                value = "S1000000000000";
                                 break;
                         }
-
-                        String value = "S" + Integer.toString(extensionValue) + "000000000000";
-
                         myDeviceGattCharacteristic.setValue(value);
                         myDeviceGatt.writeCharacteristic(myDeviceGattCharacteristic);
                     }
