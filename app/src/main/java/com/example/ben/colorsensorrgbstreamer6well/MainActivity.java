@@ -32,7 +32,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.androidplot.ui.Size;
@@ -46,7 +45,6 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.StepMode;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
-import com.example.ben.colorsensorrgbstreamer6well.R;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -61,18 +59,14 @@ public class MainActivity extends AppCompatActivity
     private static final UUID MELODYSMART_DATACHARACTERISTIC_UUID = UUID.fromString("06d1e5e7-79ad-4a71-8faa-373789f7d93c");
     private static final UUID MELODYSMART_DESCRIPTOR_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 
-    private double accumulatedTime;
-    private boolean stopwatchGoing;
-
-
     private static final int ACCESS_COARSE_LOCATION_REQUEST = 1;
     private static final int MSG_START = 0;
     private static final int MSG_STOP = 1;
     private static final int MSG_UPDATE = 2;
     private static final int REFRESH_RATE = 1;
 
-    private Button bluetoothButton, connectButton, measureButton, graphButton, saveButton,
-            stopwatchButton, resetButton, saveAsImageButton, drawReleaseButton, setExtensionButton;
+    private Button bluetoothButton, connectButton, measureButton, saveButton, resetButton,
+            drawButton, releaseButton;
     private TextView RedText, GreenText, BlueText;
     private XYPlot plot;
     private BluetoothManager deviceBluetoothManager;
@@ -87,17 +81,11 @@ public class MainActivity extends AppCompatActivity
     private BluetoothGattCharacteristic myDeviceGattCharacteristic;
     private BluetoothGattDescriptor myDeviceGattDescriptor;
 
-    private Stopwatch stopwatch;
-
-    private TextView stopwatchText;
-
     public ArrayList<Sensor> sensors = new ArrayList<>();
     private String colorStr;
     private Double colorNum;
 
     private ColorData colorData = new ColorData();
-
-    private boolean fluidDrawn = false;
 
     XYSeries redSeries;
     XYSeries greenSeries;
@@ -106,33 +94,6 @@ public class MainActivity extends AppCompatActivity
     BarFormatter redFormatter;
     BarFormatter greenFormatter;
     BarFormatter blueFormatter;
-
-    // Obtained from https://stackoverflow.com/questions/3733867/stop-watch-logic
-    Handler stopwatchHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case MSG_START:
-                    stopwatch.start(); //start timer
-                    stopwatchHandler.sendEmptyMessage(MSG_UPDATE);
-                    break;
-
-                case MSG_UPDATE:
-                    accumulatedTime = (double)stopwatch.getElapsedTime()/1000;
-                    stopwatchText.setText("Time: " + accumulatedTime);
-                    stopwatchHandler.sendEmptyMessageDelayed(MSG_UPDATE,REFRESH_RATE); //text view is updated every second,
-                    break;                                  //though the timer is still running
-                case MSG_STOP:
-                    stopwatchHandler.removeMessages(MSG_UPDATE); // no more updates.
-                    stopwatch.stop();//stop timer;
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,13 +104,10 @@ public class MainActivity extends AppCompatActivity
         bluetoothButton = findViewById(R.id.bluetoothbutton);
         connectButton = findViewById(R.id.connectbutton);
         measureButton = findViewById(R.id.measurebutton);
-        graphButton = findViewById(R.id.graphsbutton);
         saveButton = findViewById(R.id.savebutton);
         resetButton = findViewById(R.id.reset_data_button);
-        saveAsImageButton = findViewById(R.id.save_graph_button);
-        drawReleaseButton = findViewById(R.id.draw_release_button);
-        stopwatchButton = findViewById(R.id.stopwatchbutton);
-        setExtensionButton = findViewById(R.id.set_extension_button);
+        drawButton = findViewById(R.id.draw_button);
+        releaseButton = findViewById(R.id.release_button);
 
         bluetoothButtonHandler = new Handler();
         beginHandler = new Handler();
@@ -158,36 +116,25 @@ public class MainActivity extends AppCompatActivity
         bluetoothButton.setOnClickListener(onClickListener);
         connectButton.setOnClickListener(onClickListener);
         measureButton.setOnClickListener(onClickListener);
-        graphButton.setOnClickListener(onClickListener);
         saveButton.setOnClickListener(onClickListener);
-        stopwatchButton.setOnClickListener(onClickListener);
         resetButton.setOnClickListener(onClickListener);
-        saveAsImageButton.setOnClickListener(onClickListener);
-        drawReleaseButton.setOnClickListener(onClickListener);
-        setExtensionButton.setOnClickListener(onClickListener);
+        drawButton.setOnClickListener(onClickListener);
+        releaseButton.setOnClickListener(onClickListener);
 
         measureButton.setEnabled(false);
         saveButton.setEnabled(false);
-        graphButton.setEnabled(false);
         resetButton.setEnabled(false);
-        drawReleaseButton.setEnabled(false);
-        setExtensionButton.setEnabled(false);
+        drawButton.setEnabled(false);
+        releaseButton.setEnabled(false);
 
         RedText = findViewById(R.id.redtext);
         GreenText = findViewById(R.id.greentext);
         BlueText = findViewById(R.id.bluetext);
 
         initializePlot();
-
-        stopwatchText = findViewById(R.id.stopwatchtext);
-
         initializeSensors();
 
         myDeviceGatt = null;
-
-        stopwatch = new Stopwatch();
-        accumulatedTime = 0;
-        stopwatchGoing = false;
 
         deviceBluetoothManager = (BluetoothManager)getSystemService(BLUETOOTH_SERVICE);
         deviceBluetoothAdapter = deviceBluetoothManager.getAdapter();
@@ -238,14 +185,14 @@ public class MainActivity extends AppCompatActivity
                             if (deviceBluetoothAdapter.isEnabled()) {
                                 connectButton.setEnabled(true);
                                 measureButton.setEnabled(false);
-                                drawReleaseButton.setEnabled(false);
-                                setExtensionButton.setEnabled(false);
+                                drawButton.setEnabled(false);
+                                releaseButton.setEnabled(false);
                             }
                             else {
                                 connectButton.setEnabled(false);
                                 measureButton.setEnabled(false);
-                                drawReleaseButton.setEnabled(false);
-                                setExtensionButton.setEnabled(false);
+                                drawButton.setEnabled(false);
+                                releaseButton.setEnabled(false);
                             }
                         }
                     });
@@ -267,8 +214,8 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void run() {
                         measureButton.setEnabled(true);
-                        drawReleaseButton.setEnabled(true);
-                        setExtensionButton.setEnabled(true);
+                        drawButton.setEnabled(true);
+                        releaseButton.setEnabled(true);
                     }
                 }, 1000);
             }
@@ -297,16 +244,16 @@ public class MainActivity extends AppCompatActivity
                             public void run() {
                                 connectButton.setEnabled(true);
                                 measureButton.setEnabled(false);
-                                drawReleaseButton.setEnabled(false);
-                                setExtensionButton.setEnabled(false);
+                                drawButton.setEnabled(false);
+                                releaseButton.setEnabled(false);
                             }
                         }, 1000);
                     }
                     else {
                         connectButton.setEnabled(false);
                         measureButton.setEnabled(false);
-                        drawReleaseButton.setEnabled(false);
-                        setExtensionButton.setEnabled(false);
+                        drawButton.setEnabled(false);
+                        releaseButton.setEnabled(false);
                         deviceBluetoothAdapter.disable();
                     }
                     break;
@@ -316,9 +263,8 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case R.id.measurebutton:
                     measureButton.setEnabled(false);
-                    drawReleaseButton.setEnabled(false);
-                    setExtensionButton.setEnabled(false);
-                    graphButton.setEnabled(false);
+                    drawButton.setEnabled(false);
+                    releaseButton.setEnabled(false);
                     saveButton.setEnabled(false);
                     resetButton.setEnabled(false);
                     beginDataTransfer();
@@ -326,42 +272,24 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void run() {
                             measureButton.setEnabled(true);
-                            drawReleaseButton.setEnabled(true);
-                            setExtensionButton.setEnabled(true);
-                            graphButton.setEnabled(true);
+                            drawButton.setEnabled(true);
+                            releaseButton.setEnabled(true);
                             saveButton.setEnabled(true);
                             resetButton.setEnabled(true);
                         }
                     }, 2000);
                     break;
-                case R.id.graphsbutton:
-                    v.getContext().startActivity(colorData.createGraphIntent(
-                            new Intent(MainActivity.this, GraphsActivity.class)));
-                    break;
                 case R.id.savebutton:
                     saveData();
-                    break;
-                case R.id.stopwatchbutton:
-                    if (!stopwatchGoing) {
-                        stopwatchHandler.sendEmptyMessage(MSG_START);
-                        stopwatchGoing = true;
-                    }
-                    else {
-                        stopwatchHandler.sendEmptyMessage(MSG_STOP);
-                        stopwatchGoing = false;
-                    }
                     break;
                 case R.id.reset_data_button:
                     resetData();
                     break;
-                case R.id.save_graph_button:
-                    saveGraphAsImage();
+                case R.id.draw_button:
+                    drawFluid();
                     break;
-                case R.id.draw_release_button:
-                    drawReleaseFluid();
-                    break;
-                case R.id.set_extension_button:
-                    setExtension();
+                case R.id.release_button:
+                    releaseFluid();
                     break;
             }
         }
@@ -477,7 +405,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 sensors.get(0).computeColorAndSetTextViews(colorStr, colorNum);
-                int color = sensors.get(0).calculateARGB();
                 switch(colorStr) {
                     case "A":
                         break;
@@ -626,7 +553,6 @@ public class MainActivity extends AppCompatActivity
                 colorData = new ColorData();
                 //disable buttons
                 saveButton.setEnabled(false);
-                graphButton.setEnabled(false);
                 resetButton.setEnabled(false);
                 //reset text views
                 RedText.setText("R: 0.0");
@@ -707,76 +633,17 @@ public class MainActivity extends AppCompatActivity
         else {
             connectButton.setEnabled(false);
             measureButton.setEnabled(false);
-            drawReleaseButton.setEnabled(false);
-            setExtensionButton.setEnabled(false);
+            drawButton.setEnabled(false);
+            releaseButton.setEnabled(false);
         }
     }
 
-    private void saveGraphAsImage() {
-        final EditText editTextDialog = new EditText(MainActivity.this);
-        editTextDialog.setTextColor(Color.BLACK);
-
-        android.app.AlertDialog.Builder saveDialogBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
-        saveDialogBuilder.setMessage("Enter a name for your file: ");
-        saveDialogBuilder.setTitle("Save As");
-        saveDialogBuilder.setView(editTextDialog);
-
-        saveDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                String fullFileName = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()
-                        + "/" + editTextDialog.getText().toString() + ".jpg";
-                plot.setDrawingCacheEnabled(true);
-                int width = plot.getWidth();
-                int height = plot.getHeight();
-                plot.measure(width, height);
-                Bitmap bmp = Bitmap.createBitmap(plot.getDrawingCache());
-                plot.setDrawingCacheEnabled(false);
-                try {
-                    FileOutputStream fos = new FileOutputStream(fullFileName, true);
-                    bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                }
-                catch(FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-        saveDialogBuilder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //  Closes the dialog automatically
-            }
-        });
-
-        android.app.AlertDialog saveDialog = saveDialogBuilder.create();
-        saveDialog.show();
-    }
-
-    private void drawReleaseFluid() {
-        if(fluidDrawn) {
-            fluidDrawn = false;
-            drawReleaseButton.setText(getText(R.string.draw_fluid));
-            releaseFluid();
-        }
-        else {
-            fluidDrawn = true;
-            drawReleaseButton.setText(getText(R.string.release_fluid));
-            drawFluid();
-        }
-    }
-
-    private void releaseFluid() {
+    private void releaseFluid() { //TODO update
         myDeviceGattCharacteristic.setValue("R0000000000000");
         myDeviceGatt.writeCharacteristic(myDeviceGattCharacteristic);
     }
 
-    private void drawFluid() {
-        myDeviceGattCharacteristic.setValue("D0000000000000");
-        myDeviceGatt.writeCharacteristic(myDeviceGattCharacteristic);
-    }
-
-    public void setExtension() {
+    private void drawFluid() { //TODO update
         LayoutInflater inflater = this.getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_extension, null);
 
@@ -786,7 +653,7 @@ public class MainActivity extends AppCompatActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Extension Length")
                 .setView(view)
-                .setPositiveButton("Set Extension", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Extend", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

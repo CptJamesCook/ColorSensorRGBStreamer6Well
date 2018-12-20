@@ -1,7 +1,5 @@
 package com.example.ben.colorsensorrgbstreamer6well;
 
-import android.content.Intent;
-
 import java.util.ArrayList;
 
 public class ColorData {
@@ -42,24 +40,6 @@ public class ColorData {
                 break;
         }
         numberOfMeasurements = alphaVals.size();
-    }
-
-    public Intent createGraphIntent(Intent graphIntent) {
-        Integer numberOfValues = alphaVals.size() + redVals.size() + greenVals.size() + blueVals.size();
-        Integer intentIndex = 0;
-        Integer measurement = 0;
-        while(intentIndex < numberOfValues) {
-            graphIntent.putExtra(Integer.toString(intentIndex), Integer.toString(measurement) + "A" + Double.toString(alphaVals.get(measurement)));
-            intentIndex++;
-            graphIntent.putExtra(Integer.toString(intentIndex), Integer.toString(measurement) + "R" + Double.toString(redVals.get(measurement)));
-            intentIndex++;
-            graphIntent.putExtra(Integer.toString(intentIndex), Integer.toString(measurement) + "G" + Double.toString(greenVals.get(measurement)));
-            intentIndex++;
-            graphIntent.putExtra(Integer.toString(intentIndex), Integer.toString(measurement) + "B" + Double.toString(blueVals.get(measurement)));
-            intentIndex++;
-            measurement++;
-        }
-        return graphIntent;
     }
 
     public void addSensorBeingUsed(int sensorNum) {

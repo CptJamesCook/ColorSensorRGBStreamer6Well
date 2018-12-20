@@ -32,17 +32,6 @@
         app:title="A Simple XY Plot" />
 
     <Button
-        android:id="@+id/stopwatchbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignEnd="@+id/savebutton"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/savebutton"
-        android:minHeight="67dip"
-        android:minWidth="128dip"
-        android:text="@string/stopwatch" />
-
-    <Button
         android:id="@+id/bluetoothbutton"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
@@ -56,46 +45,40 @@
         android:id="@+id/connectbutton"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_alignEnd="@+id/bluetoothbutton"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/bluetoothbutton"
-        android:minHeight="67dip"
         android:minWidth="128dip"
+        android:minHeight="67dip"
         android:text="@string/connect" />
 
     <Button
         android:id="@+id/measurebutton"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_alignEnd="@+id/connectbutton"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/connectbutton"
-        android:minHeight="67dip"
         android:minWidth="128dip"
+        android:minHeight="67dip"
         android:text="@string/measure" />
-
-    <Button
-        android:id="@+id/graphsbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignEnd="@+id/measurebutton"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/measurebutton"
-        android:minHeight="67dip"
-        android:minWidth="128dip"
-        android:text="@string/graphs" />
 
 
     <Button
         android:id="@+id/savebutton"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_alignEnd="@+id/graphsbutton"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/graphsbutton"
-        android:minHeight="67dip"
+        android:layout_below="@+id/measurebutton"
+        android:layout_marginTop="2dp"
         android:minWidth="128dip"
+        android:minHeight="67dip"
         android:text="@string/save" />
+
+    <Button
+        android:id="@+id/draw_button"
+        android:layout_width="128dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/savebutton"
+        android:layout_alignStart="@+id/bluetoothbutton"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:text="@string/draw_fluid" />
 
     <TextView
         android:text="@string/data"
@@ -137,47 +120,24 @@
         android:layout_marginStart="630dp"
         android:id="@+id/bluetext" />
 
-    <TextView
-        android:id="@+id/stopwatchtext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="81dp"
-        android:layout_toEndOf="@+id/stopwatchbutton"
-        android:text="@string/time"
-        android:textSize="40sp" />
-
     <Button
         android:id="@+id/reset_data_button"
         android:layout_width="153dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/bluetext"
-        android:layout_below="@+id/stopwatchbutton"
+        android:layout_below="@+id/plot"
+        android:layout_alignEnd="@+id/plot"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="0dp"
         android:text="@string/reset_data" />
 
     <Button
-        android:id="@+id/save_graph_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/greentext"
-        android:layout_alignTop="@+id/stopwatchbutton"
-        android:text="@string/save_as_image" />
-
-    <Button
-        android:id="@+id/draw_release_button"
+        android:id="@+id/release_button"
         android:layout_width="128dp"
-        android:layout_height="60dp"
-        android:layout_alignStart="@+id/stopwatchbutton"
-        android:layout_below="@+id/stopwatchbutton"
-        android:text="@string/draw_fluid" />
-
-    <Button
-        android:id="@+id/set_extension_button"
-        android:layout_width="154dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/bluetext"
-        android:layout_alignTop="@+id/stopwatchbutton"
-        android:text="Set Extention" />
+        android:layout_height="62dp"
+        android:layout_below="@+id/draw_button"
+        android:layout_alignStart="@+id/bluetoothbutton"
+        android:layout_marginTop="1dp"
+        android:text="@string/release_fluid" />
 
 
 </RelativeLayout>
