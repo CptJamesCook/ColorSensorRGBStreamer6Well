@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -52,6 +53,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+
 
 public class MainActivity extends AppCompatActivity
                           implements SensorDialogFragment.SensorDialogListener {
@@ -300,8 +303,19 @@ public class MainActivity extends AppCompatActivity
         manageButtons();
     }
 
+    //ray
+    public void checkBT() {
+        if (deviceBluetoothAdapter == null || !deviceBluetoothAdapter.isEnabled()) {
+            deviceBluetoothAdapter.enable();
+        }
+    }
+    //ray
+
     public void scanForDevice() {
         deviceLeScanner = deviceBluetoothAdapter.getBluetoothLeScanner();
+        checkBT();
+
+
         deviceLeScanner.startScan(deviceLeScanCallback);
 
         scanHandler.postDelayed(new Runnable() {//  Here the handler is called to manage the time for the scan
@@ -639,16 +653,28 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void releaseFluid() { //TODO update
+        checkBT();
         myDeviceGattCharacteristic.setValue("R0000000000000");
         myDeviceGatt.writeCharacteristic(myDeviceGattCharacteristic);
-    }
 
+    }
+int extensionWait_default=500;
+int step_size_default=1;
     private void drawFluid() { //TODO update
+        checkBT();
         LayoutInflater inflater = this.getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_extension, null);
 
         final EditText extensionLength = view.findViewById(R.id.edit_text_extension_length);
+        final EditText extensionWait = view.findViewById(R.id.edit_text_extension_wait);
+        extensionWait.setText(String.valueOf(extensionWait_default));
+        final CheckBox wait = view.findViewById(R.id.checkbox_extension_wait);
+        final EditText step_size= view.findViewById(R.id.edit_text_step_size);
+        step_size.setText(String.valueOf(step_size_default));
+
         extensionLength.setFilters(new InputFilter[] {new InputFilterMinMax(1, 100)});
+        extensionWait.setFilters(new InputFilter[] {new InputFilterMinMax(0, 10000)});
+        step_size.setFilters(new InputFilter[] {new InputFilterMinMax(1, 9)});
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Extension Length")
@@ -659,23 +685,43 @@ public class MainActivity extends AppCompatActivity
 
                         String editTextResult = extensionLength.getText().toString();
                         String value = "";
+                        String wait_time=extensionWait.getText().toString();
+                        while (wait_time.length()<8){
+                            wait_time="0"+wait_time;
+                        }
+                        String incremental=String.valueOf(wait.isChecked() ? 1 : 0)+step_size.getText().toString()+wait_time;
+                        extensionWait_default=Integer.valueOf(wait_time);
+                        step_size_default=Integer.valueOf(step_size.getText().toString());
+
 
                         switch(editTextResult.length()) {
                             case 0:
-                                value = "S0000000000000";
+                                value = "S000"+incremental;
                                 break;
                             case 1:
-                                value = "S00" + editTextResult + "0000000000";
+                                value = "S00" + editTextResult + incremental;
                                 break;
                             case 2:
-                                value = "S0" + editTextResult + "0000000000";
+                                value = "S0" + editTextResult + incremental;
                                 break;
                             case 3:
-                                value = "S1000000000000";
+                                value = "S100"+incremental;
                                 break;
                         }
-                        myDeviceGattCharacteristic.setValue(value);
-                        myDeviceGatt.writeCharacteristic(myDeviceGattCharacteristic);
+//                        wait.isChecked()
+                        if (false) {
+                            int extension_distance=Integer.parseInt(editTextResult);
+                            while (extension_distance>0) {
+                                myDeviceGattCharacteristic.setValue("S0010000000000");
+                                myDeviceGatt.writeCharacteristic(myDeviceGattCharacteristic);
+                                android.os.SystemClock.sleep(Integer.parseInt(extensionWait.getText().toString()));
+                                extension_distance=extension_distance-1;
+                            }
+                        }else{
+                            myDeviceGattCharacteristic.setValue(value);
+                            myDeviceGatt.writeCharacteristic(myDeviceGattCharacteristic);
+                        }
+
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

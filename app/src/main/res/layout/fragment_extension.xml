@@ -1,25 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    tools:context=".ExtensionFragment">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+         <TextView
+            android:id="@+id/text_view_extension_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/extension_length_1_100" />
+
+        <EditText
+            android:id="@+id/edit_text_extension_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:importantForAutofill="no" />
+    </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/text_view_extension_length"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/extension_length_1_100" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/edit_text_extension_length"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/text_view_extension_wait"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/extension_wait" />
+
+        <EditText
+            android:id="@+id/edit_text_extension_wait"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:importantForAutofill="no" />
+
+
+        <CheckBox android:id="@+id/checkbox_extension_wait"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incremental   " />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:importantForAutofill="no" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_view_step_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Step Size" />
+
+        <EditText
+            android:id="@+id/edit_text_step_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:importantForAutofill="no" />
+    </LinearLayout>
+
+
 </LinearLayout>

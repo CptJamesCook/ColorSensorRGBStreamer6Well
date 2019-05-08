@@ -1,0 +1,252 @@
+warning: LF will be replaced by CRLF in .idea/gradle.xml.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in .idea/misc.xml.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in .idea/modules.xml.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in .idea/runConfigurations.xml.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in .idea/vcs.xml.
+The file will have its original line endings in your working directory
+[1mdiff --git a/.idea/assetWizardSettings.xml b/.idea/assetWizardSettings.xml[m
+[1mdeleted file mode 100644[m
+[1mindex b262b4d..0000000[m
+[1m--- a/.idea/assetWizardSettings.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,40 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project version="4">[m
+[31m-  <component name="WizardSettings">[m
+[31m-    <option name="children">[m
+[31m-      <map>[m
+[31m-        <entry key="imageWizard">[m
+[31m-          <value>[m
+[31m-            <PersistentState>[m
+[31m-              <option name="children">[m
+[31m-                <map>[m
+[31m-                  <entry key="imageAssetPanel">[m
+[31m-                    <value>[m
+[31m-                      <PersistentState>[m
+[31m-                        <option name="children">[m
+[31m-                          <map>[m
+[31m-                            <entry key="launcher">[m
+[31m-                              <value>[m
+[31m-                                <PersistentState>[m
+[31m-                                  <option name="values">[m
+[31m-                                    <map>[m
+[31m-                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/6wellappicon.jpeg" />[m
+[31m-                                    </map>[m
+[31m-                                  </option>[m
+[31m-                                </PersistentState>[m
+[31m-                              </value>[m
+[31m-                            </entry>[m
+[31m-                          </map>[m
+[31m-                        </option>[m
+[31m-                      </PersistentState>[m
+[31m-                    </value>[m
+[31m-                  </entry>[m
+[31m-                </map>[m
+[31m-              </option>[m
+[31m-            </PersistentState>[m
+[31m-          </value>[m
+[31m-        </entry>[m
+[31m-      </map>[m
+[31m-    </option>[m
+[31m-  </component>[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/.idea/caches/build_file_checksums.ser b/.idea/caches/build_file_checksums.ser[m
+[1mindex 8363341..cfe908c 100644[m
+Binary files a/.idea/caches/build_file_checksums.ser and b/.idea/caches/build_file_checksums.ser differ
+[1mdiff --git a/.idea/misc.xml b/.idea/misc.xml[m
+[1mindex c0f68ed..99202cc 100644[m
+[1m--- a/.idea/misc.xml[m
+[1m+++ b/.idea/misc.xml[m
+[36m@@ -25,7 +25,7 @@[m
+       </value>[m
+     </option>[m
+   </component>[m
+[31m-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">[m
+[32m+[m[32m  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">[m
+     <output url="file://$PROJECT_DIR$/build/classes" />[m
+   </component>[m
+   <component name="ProjectType">[m
+[1mdiff --git a/.idea/vcs.xml b/.idea/vcs.xml[m
+[1mindex 94a25f7..35eb1dd 100644[m
+[1m--- a/.idea/vcs.xml[m
+[1m+++ b/.idea/vcs.xml[m
+[36m@@ -1,6 +1,6 @@[m
+ <?xml version="1.0" encoding="UTF-8"?>[m
+ <project version="4">[m
+   <component name="VcsDirectoryMappings">[m
+[31m-    <mapping directory="$PROJECT_DIR$" vcs="Git" />[m
+[32m+[m[32m    <mapping directory="" vcs="Git" />[m
+   </component>[m
+ </project>[m
+\ No newline at end of file[m
+[1mdiff --git a/app/build.gradle b/app/build.gradle[m
+[1mindex 41fb035..7216eea 100644[m
+[1m--- a/app/build.gradle[m
+[1m+++ b/app/build.gradle[m
+[36m@@ -2,7 +2,7 @@[m [mapply plugin: 'com.android.application'[m
+ [m
+ android {[m
+     compileSdkVersion 27[m
+[31m-    buildToolsVersion '27.0.3'[m
+[32m+[m[32m    buildToolsVersion '28.0.3'[m
+     defaultConfig {[m
+         applicationId "com.colorsensorrgbstreamer6well"[m
+         minSdkVersion 21[m
+[1mdiff --git a/app/src/main/java/com/example/ben/colorsensorrgbstreamer6well/FormattedWorkbook.java b/app/src/main/java/com/example/ben/colorsensorrgbstreamer6well/FormattedWorkbook.java[m
+[1mindex 5c59d70..6346cbf 100644[m
+[1m--- a/app/src/main/java/com/example/ben/colorsensorrgbstreamer6well/FormattedWorkbook.java[m
+[1m+++ b/app/src/main/java/com/example/ben/colorsensorrgbstreamer6well/FormattedWorkbook.java[m
+[36m@@ -1,5 +1,6 @@[m
+ package com.example.ben.colorsensorrgbstreamer6well;[m
+ [m
+[32m+[m[32mimport android.graphics.Color;[m
+ import android.os.Environment;[m
+ [m
+ import org.apache.poi.hssf.usermodel.HSSFSheet;[m
+[36m@@ -12,11 +13,10 @@[m [mimport org.apache.poi.ss.usermodel.Row;[m
+ [m
+ import java.io.FileOutputStream;[m
+ import java.io.IOException;[m
+[31m-import java.util.ArrayList;[m
+ [m
+ public class FormattedWorkbook {[m
+     private HSSFWorkbook _workbook;[m
+[31m-    private static String[] columns = {"Measurement #", "Sensor #", "Alpha", "Red", "Green", "Blue", "Adjusted Red", "Adjusted Green", "Adjusted Blue"};[m
+[32m+[m[32m    private static String[] columns = {"Measurement #", "Sensor #", "Alpha", "Red", "Green", "Blue", "Percent Red", "Percent Green", "Percent Blue", "Hex Color"};[m
+     private HSSFSheet _sheet;[m
+ [m
+     private int measurementColumn = 0;[m
+[36m@@ -25,9 +25,10 @@[m [mpublic class FormattedWorkbook {[m
+     private int redColumn = 3;[m
+     private int greenColumn = 4;[m
+     private int blueColumn = 5;[m
+[31m-    private int adjustedRedColumn = 6;[m
+[31m-    private int adjustedGreenColumn = 7;[m
+[31m-    private int adjustedBlueColumn = 8;[m
+[32m+[m[32m    private int percentRedColumn = 6;[m
+[32m+[m[32m    private int percentGreenColumn = 7;[m
+[32m+[m[32m    private int percentBlueColumn = 8;[m
+[32m+[m[32m    private int hexColorColumn = 9;[m
+ [m
+     FormattedWorkbook() {[m
+         _workbook = new HSSFWorkbook();[m
+[36m@@ -36,7 +37,7 @@[m [mpublic class FormattedWorkbook {[m
+         //set default column width to make up for the fact we can't resize columns automagically[m
+         //https://stackoverflow.com/questions/37069820/android-poi-crash-when-using-autosizecolumn[m
+         int fontSize = 14;[m
+[31m-        _sheet.setDefaultColumnWidth((int)(0.11 * fontSize * columns[6].length())); //longest column should be Adjusted Green name[m
+[32m+[m[32m        _sheet.setDefaultColumnWidth((int)(0.11 * fontSize * columns[6].length())); //longest column should be Percent Green name[m
+ [m
+         // Create a Font for styling header cells[m
+         Font headerFont = _workbook.createFont();[m
+[36m@@ -63,29 +64,66 @@[m [mpublic class FormattedWorkbook {[m
+         //make the excel sheet[m
+         int totalMeasurements = colorData.alphaVals.size();//number of measurements is equal to the number of values in a parameters array[m
+         Row row;[m
+[31m-        ArrayList<Double> alphaVals = colorData.alphaVals;[m
+[31m-        ArrayList<Double> redVals = colorData.redVals;[m
+[31m-        ArrayList<Double> greenVals = colorData.greenVals;[m
+[31m-        ArrayList<Double> blueVals = colorData.blueVals;[m
+ [m
+[31m-        ArrayList<Integer> sensorVals = colorData.sensorVals;[m
+[32m+[m[32m        Double alpha;[m
+[32m+[m[32m        Double red;[m
+[32m+[m[32m        Double green;[m
+[32m+[m[32m        Double blue;[m
+[32m+[m
+[32m+[m[32m        Double percentRed;[m
+[32m+[m[32m        Double percentGreen;[m
+[32m+[m[32m        Double percentBlue;[m
+[32m+[m
+[32m+[m[32m        Integer sensorNum;[m
+ [m
+         for(int measurement=0; measurement<totalMeasurements; measurement++) {[m
+             row = _sheet.createRow(measurement+1);[m
+[32m+[m[32m            alpha = colorData.alphaVals.get(measurement);[m
+[32m+[m[32m            red = colorData.redVals.get(measurement);[m
+[32m+[m[32m            green = colorData.greenVals.get(measurement);[m
+[32m+[m[32m            blue = colorData.blueVals.get(measurement);[m
+[32m+[m
+[32m+[m[32m            percentRed = calculateColorPercent(red, alpha, red, green, blue);[m
+[32m+[m[32m            percentGreen = calculateColorPercent(green, alpha, red, green, blue);[m
+[32m+[m[32m            percentBlue = calculateColorPercent(blue, alpha, red, green, blue);[m
+[32m+[m
+[32m+[m[32m            sensorNum = colorData.sensorVals.get(measurement);[m
+[32m+[m
+[32m+[m[32m            //Generate cells and populate them.[m
+             row.createCell(measurementColumn).setCellValue(measurement+1);[m
+[31m-            row.createCell(sensorColumn).setCellValue(sensorVals.get(measurement));[m
+[31m-            row.createCell(alphaColumn).setCellValue(alphaVals.get(measurement));[m
+[31m-            row.createCell(redColumn).setCellValue(redVals.get(measurement));[m
+[31m-            row.createCell(greenColumn).setCellValue(greenVals.get(measurement));[m
+[31m-            row.createCell(blueColumn).setCellValue(blueVals.get(measurement));[m
+[31m-            row.createCell(adjustedRedColumn).setCellValue(redVals.get(measurement)/alphaVals.get(measurement) *100);[m
+[31m-            row.createCell(adjustedGreenColumn).setCellValue(greenVals.get(measurement)/alphaVals.get(measurement) *100);[m
+[31m-            row.createCell(adjustedBlueColumn).setCellValue(blueVals.get(measurement)/alphaVals.get(measurement) *100);[m
+[32m+[m[32m            row.createCell(sensorColumn).setCellValue(sensorNum);[m
+[32m+[m[32m            row.createCell(alphaColumn).setCellValue(alpha);[m
+[32m+[m[32m            row.createCell(redColumn).setCellValue(red);[m
+[32m+[m[32m            row.createCell(greenColumn).setCellValue(green);[m
+[32m+[m[32m            row.createCell(blueColumn).setCellValue(blue);[m
+[32m+[m[32m            row.createCell(percentRedColumn).setCellValue(percentRed);[m
+[32m+[m[32m            row.createCell(percentGreenColumn).setCellValue(percentGreen);[m
+[32m+[m[32m            row.createCell(percentBlueColumn).setCellValue(percentBlue);[m
+[32m+[m[32m            row.createCell(hexColorColumn).setCellValue(colorHexString(percentRed, percentGreen, percentBlue));[m
+         }[m
+ [m
+         this.save(saveFileName);[m
+     }[m
+ [m
+[32m+[m[32m    private Double calculateColorPercent(Double numerator, Double alpha, Double red, Double green, Double blue) {[m
+[32m+[m[32m        Double adjNumerator = numerator/alpha;[m
+[32m+[m[32m        Double adjRed = red/alpha;[m
+[32m+[m[32m        Double adjGreen = green/alpha;[m
+[32m+[m[32m        Double adjBlue = blue/alpha;[m
+[32m+[m[32m        return adjNumerator/(adjRed+adjGreen+adjBlue) * 100.0;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    private String colorHexString(Double percentRed, Double percentGreen, Double percentBlue) {[m
+[32m+[m[32m        int redInt = (int)Math.round(2.55*percentRed); // 255/100 maps a percentage to a value between 0-255[m
+[32m+[m[32m        int greenInt = (int)Math.round(2.55*percentGreen);[m
+[32m+[m[32m        int blueInt =  (int)Math.round(2.55*percentBlue);[m
+[32m+[m
+[32m+[m[32m        //Convert numbers into a color int, and format into a hex string[m
+[32m+[m[32m        String hexColor = String.format("#%06X", (0xFFFFFF & Color.rgb(redInt, greenInt, blueInt)));[m
+[32m+[m
+[32m+[m[32m        return hexColor;[m
+[32m+[m[32m    }[m
+[32m+[m
+     private void save(String saveFileName) throws IOException {[m
+         String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()[m
+                 + saveFileName;[m
+[1mdiff --git a/build.gradle b/build.gradle[m
+[1mindex ad6a928..ae9fbaf 100644[m
+[1m--- a/build.gradle[m
+[1m+++ b/build.gradle[m
+[36m@@ -6,7 +6,7 @@[m [mbuildscript {[m
+         google()[m
+     }[m
+     dependencies {[m
+[31m-        classpath 'com.android.tools.build:gradle:3.1.3'[m
+[32m+[m[32m        classpath 'com.android.tools.build:gradle:3.2.1'[m
+ [m
+         // NOTE: Do not place your application dependencies here; they belong[m
+         // in the individual module build.gradle files[m
+[1mdiff --git a/gradle/wrapper/gradle-wrapper.properties b/gradle/wrapper/gradle-wrapper.properties[m
+[1mindex 25a4ceb..29ea49d 100644[m
+[1m--- a/gradle/wrapper/gradle-wrapper.properties[m
+[1m+++ b/gradle/wrapper/gradle-wrapper.properties[m
+[36m@@ -1,6 +1,6 @@[m
+[31m-#Fri May 18 12:33:12 MDT 2018[m
+[32m+[m[32m#Wed Nov 28 10:02:26 MST 2018[m
+ distributionBase=GRADLE_USER_HOME[m
+ distributionPath=wrapper/dists[m
+ zipStoreBase=GRADLE_USER_HOME[m
+ zipStorePath=wrapper/dists[m
+[31m-distributionUrl=https\://services.gradle.org/distributions/gradle-4.4-all.zip[m
+[32m+[m[32mdistributionUrl=https\://services.gradle.org/distributions/gradle-4.6-all.zip[m
