@@ -53,6 +53,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
+
 public class MainActivity extends AppCompatActivity
                           implements SensorDialogFragment.SensorDialogListener {
     private static final UUID MELODYSMART_SERVICE_UUID = UUID.fromString("bc2f4cc6-aaef-4351-9034-d66268e328f0");
@@ -300,8 +302,19 @@ public class MainActivity extends AppCompatActivity
         manageButtons();
     }
 
+    //ray
+    public void checkBT() {
+        if (deviceBluetoothAdapter == null || !deviceBluetoothAdapter.isEnabled()) {
+            deviceBluetoothAdapter.enable();
+        }
+    }
+    //ray
+
     public void scanForDevice() {
         deviceLeScanner = deviceBluetoothAdapter.getBluetoothLeScanner();
+        checkBT();
+
+
         deviceLeScanner.startScan(deviceLeScanCallback);
 
         scanHandler.postDelayed(new Runnable() {//  Here the handler is called to manage the time for the scan
@@ -639,11 +652,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void releaseFluid() { //TODO update
+        checkBT();
         myDeviceGattCharacteristic.setValue("R0000000000000");
         myDeviceGatt.writeCharacteristic(myDeviceGattCharacteristic);
     }
 
     private void drawFluid() { //TODO update
+        checkBT();
         LayoutInflater inflater = this.getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_extension, null);
 
